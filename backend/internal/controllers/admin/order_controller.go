@@ -3,6 +3,8 @@ package admin
 
 import (
 	orderRepo "backend/internal/repository/admin"
+	 "backend/internal/models"
+    "backend/configs"
 	"encoding/json"
 	"net/http"
 	"strconv"
@@ -12,11 +14,24 @@ import (
 
 // GET ALL ORDERS
 func GetAllOrders(w http.ResponseWriter, r *http.Request) {
-	orders, err := orderRepo.GetAllOrders()
-	if err != nil {
+	status := r.URL.Query().Get("status")
+
+	var orders []models.Order
+	query := configs.DB.
+		Preload("Customer").
+		Preload("Staff").
+		Preload("Items.Variant.Product")
+
+	if status != "" {
+		query = query.Where("status = ?", status)
+	}
+
+	if err := query.Find(&orders).Error; err != nil {
 		http.Error(w, "Failed to fetch orders", http.StatusInternalServerError)
 		return
 	}
+
+	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(map[string]interface{}{"data": orders})
 }
 

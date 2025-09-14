@@ -15,7 +15,8 @@ func SetupAdminRoutes(r *mux.Router) {
 	adminRouter.HandleFunc("/users", adminCtrl.GetAllUsers).Methods("GET")
 	adminRouter.HandleFunc("/users/{id:[0-9]+}", adminCtrl.EditUser).Methods("PUT")
 	adminRouter.HandleFunc("/users/{id:[0-9]+}", adminCtrl.DeleteUser).Methods("DELETE")
-    // Suppliers 
+	adminRouter.HandleFunc("/logs", adminCtrl.GetUserLogsHandler).Methods("GET")
+	
 	supplierRouter := r.PathPrefix("/api/admin/suppliers").Subrouter()
 	supplierRouter.HandleFunc("", adminCtrl.GetAllSuppliers).Methods("GET")
 	supplierRouter.HandleFunc("", adminCtrl.CreateSupplier).Methods("POST")

@@ -6,6 +6,7 @@ import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {formatPhone  } from "../../../utils/format";
 
 interface Supplier {
   id: number;
@@ -132,7 +133,7 @@ const SuppliersPage: React.FC = () => {
                 ) : paginatedSuppliers.map(s => (
                   <tr key={s.id}>
                     <td><Link to={`/admin/suppliers/${s.id}`}>{s.name}</Link></td>
-                    <td>{s.phone}</td>
+                    <td>{formatPhone(s.phone?? "")}</td>
                     <td>{s.email}</td>
                     <td>{s.address}</td>
                     <td className="d-flex gap-2">

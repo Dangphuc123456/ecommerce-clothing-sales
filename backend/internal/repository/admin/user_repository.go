@@ -43,3 +43,15 @@ func UpdateUser(id uint, newData *models.User) (*models.User, error) {
 func DeleteUser(id uint) error {
 	return configs.DB.Delete(&models.User{}, id).Error
 }
+func GetAllLoginLogs() ([]models.LoginLog, error) {
+	var logs []models.LoginLog
+	err := configs.DB.Order("created_at desc").Find(&logs).Error
+	return logs, err
+}
+
+// Lấy log theo user_id (cho staff/customer)
+func GetLoginLogsByUserID(userID uint) ([]models.LoginLog, error) {
+	var logs []models.LoginLog
+	err := configs.DB.Where("user_id = ?", userID).Order("created_at desc").Find(&logs).Error
+	return logs, err
+}

@@ -4,6 +4,7 @@ import Select from "react-select";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import api from "../../../api/axios";
+import { formatCurrency } from "../../../utils/format";
 
 interface Purchase {
   id: number;
@@ -187,8 +188,8 @@ const PurchaseOrdersPage: React.FC = () => {
                       <td>{getStaffName(p.staff_id)}</td>
                       <td>{variant}</td>
                       <td>{p.quantity}</td>
-                      <td>{p.cost_price}</td>
-                      <td>{p.total}</td>
+                      <td>{formatCurrency(Number(p.cost_price))}</td>
+                      <td>{formatCurrency(Number(p.total))}</td>
                       <td>{new Date(p.created_at).toLocaleString()}</td>
                       <td className="text-center align-middle">
                         <div className="d-flex justify-content-center gap-2">

@@ -119,11 +119,36 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 	user, err := repository.GetUserByEmail(req.Email)
 	if err != nil || !utils.CheckPasswordHash(user.PasswordHash, req.Password) {
+		// ❌ Ghi log thất bại
+		repository.CreateLoginLog(&models.LoginLog{
+			UserID:    0,
+			Role:      "unknown",
+			IP:        r.RemoteAddr,
+			UserAgent: r.UserAgent(),
+			Status:    "failed",
+			Message:   "Invalid credentials",
+			CreatedAt: time.Now(),
+		})
+
 		http.Error(w, "Invalid credentials", http.StatusUnauthorized)
 		return
 	}
 
+	// ✅ Tạo token
 	token, _ := service.GenerateToken(user.ID, user.Role)
+
+	// ✅ Ghi log thành công
+	repository.CreateLoginLog(&models.LoginLog{
+		UserID:    user.ID,
+		Role:      user.Role,
+		IP:        r.RemoteAddr,
+		UserAgent: r.UserAgent(),
+		Status:    "success",
+		Message:   "Login successful",
+		CreatedAt: time.Now(),
+	})
+
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(map[string]string{"token": token})
 }
+

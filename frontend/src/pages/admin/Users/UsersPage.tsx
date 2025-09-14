@@ -5,6 +5,7 @@ import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {formatPhone  } from "../../../utils/format";
 
 interface User {
   id: number;
@@ -154,7 +155,7 @@ const UsersPage: React.FC = () => {
                     <td>{u.id}</td>
                     <td>{u.username}</td>
                     <td>{u.email}</td>
-                    <td>{u.phone}</td>
+                    <td>{formatPhone(u.phone)}</td>
                     <td>{u.address}</td>
                     <td>{u.role}</td>
                     <td className="d-flex gap-2">

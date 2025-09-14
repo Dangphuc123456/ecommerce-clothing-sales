@@ -4,6 +4,7 @@ import { Table, Button, Modal, Spinner, Form } from "react-bootstrap";
 import api from "../../../api/axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { formatCurrency } from "../../../utils/format";
 
 interface User { id: number; username: string; }
 interface Variant { id: number; Product: { name: string }; size: string; color: string; }
@@ -121,7 +122,7 @@ const OrderManagementPage: React.FC = () => {
                     <td>{order.Staff?.username ?? order.StaffID ?? "-"}</td>
                     <td>{order.status}</td>
                     <td>{order.payment_method}</td>
-                    <td>{order.total}</td>
+                    <td>{formatCurrency(Number(order.total))}</td>
                     <td>{new Date(order.created_at).toLocaleString()}</td>
                     <td>
                       <Button variant="info" size="sm" onClick={() => openDetail(order.id)}>Details</Button>

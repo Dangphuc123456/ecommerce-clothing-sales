@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import api from "../../../api/axios";
 import { toast, ToastContainer } from "react-toastify";
 import Select from "react-select";
+import { formatCurrency } from "../../../utils/format";
 
 interface Product {
   id: number;
@@ -171,9 +172,9 @@ const ProductsPage: React.FC = () => {
                     <td><Link to={`/admin/products/${p.id}`}>{p.name}</Link></td>
                     <td>{p.description}</td>
                     <td>{categories.find(c => c.value === p.category_id)?.label ?? p.category_id ?? "Unknown"}</td>
-                    <td>{p.price?.toFixed(2)}</td>
+                    <td>{formatCurrency(Number(p.price))}</td>
                     <td>{p.discount}%</td>
-                    <td>{p.discounted_price?.toFixed(2)}</td>
+                    <td>{formatCurrency(Number(p.discounted_price))}</td>
                     <td>{p.image && <Image src={p.image} width={60} height={60} />}</td>
                     <td className="text-center align-middle">
                       <div className="d-flex justify-content-center gap-2">

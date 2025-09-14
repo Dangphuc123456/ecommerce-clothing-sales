@@ -4,6 +4,7 @@ import { useParams, Link } from "react-router-dom";
 import { Table, Button, Modal, Form, Spinner, Card, Image, Row, Col } from "react-bootstrap";
 import api from "../../../api/axios";
 import { toast, ToastContainer } from "react-toastify";
+import { formatCurrency } from "../../../utils/format";
 
 interface Product {
   id: number;
@@ -247,7 +248,7 @@ const ProductDetailPage: React.FC = () => {
                           <td>{v.id}</td>
                           <td>{v.size}</td>
                           <td>{v.color}</td>
-                          <td>{v.price}</td>
+                          <td>{formatCurrency(Number(v.price))}</td>
                           <td>{v.stock}</td>
                           <td>{v.image ? <Image src={v.image} width={60} height={60} rounded /> : null}</td>
                           <td>{v.sku}</td>

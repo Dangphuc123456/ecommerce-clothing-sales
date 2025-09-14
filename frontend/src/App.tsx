@@ -21,6 +21,7 @@ import SupplierDetailPage from "./pages/admin/Supplier/SupplierDetailPage";
 import CategoryPage from "./pages/admin/Category/CategoryPage";
 import CategoryDetailPage from "./pages/admin/Category/CategoryDetailPage";
 import ProductDetailPage from "./pages/admin/Products/ProductsDetailPage";
+import LogPage from "./pages/admin/Loginlog/LogPage";
 
 function App() {
   return (
@@ -42,7 +43,7 @@ function App() {
           <Route path="products/:id" element={<ProductDetailPage />} />
           <Route path="suppliers" element={<SuppliersPage />} />
           <Route path="suppliers/:id" element={<SupplierDetailPage />} />
-
+            <Route path="logs" element={<LogPage />} />
           <Route path="purchase-orders" element={<PurchaseOrdersPage />} />
           <Route path="orders" element={<OrdersPage />} />
           <Route path="categories" element={<CategoryPage />} />
